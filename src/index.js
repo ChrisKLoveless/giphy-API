@@ -32,10 +32,22 @@ const getTrend = () => {
   request.send();
 };
 
+const getRandom = () => {
+  let request = new XMLHttpRequest();
+  const url = `https://api.giphy.com/v1/gifs/random?api_key=${process.env.API_KEY}&tag=&rating=g`;
+
+  request.addEventListener("loadend", function () {
+    const response = JSON.parse(this.responseText);
+    if (this.status === 200) {
+      displayRandom(response);
+    }
+  });
+  request.open("GET", url, true);
+  request.send();
+}
 
 // UI Logic---------------------------------------------
 function displayContent(keyword, array) {
-console.log(keyword);
   document.getElementById("output").innerText = `Your search results for ${keyword} are ...`;
 
   array.forEach(function (element) {
@@ -56,6 +68,13 @@ function displayTrend(array) {
   });
 }
 
+function displayRandom(response) {
+  document.getElementById("output").innerText = `Your random GIF is ...`;
+  let imgElement = document.createElement("img");
+  imgElement.setAttribute("src", response.data.images.fixed_width.url);
+  document.getElementById("output").append(imgElement);
+}
+
 function handleFormSubmission(event) {
   event.preventDefault();
 
@@ -69,8 +88,15 @@ function handleTrend(event) {
   getTrend();
 }
 
+function handleRandom(event) {
+  event.preventDefault();
+  getRandom();
+}
+
+
 window.addEventListener("load", function () {
   document.getElementById('form').addEventListener("submit", handleFormSubmission);
-  document.getElementById("trend-btn").addEventListener("click", handleTrend);
+  document.getElementById("trend-btn").addEventListener("click", handleTrend); 
+  document.getElementById("random-btn").addEventListener("click", handleRandom);
 
 });
