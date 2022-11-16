@@ -1,4 +1,22 @@
 body {
   background-color: indianred;
   text-align: center;
+  padding-top: 50px;
 }
+
+h1 {
+  font-size: 75px;
+  color:white;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+input {
+  margin-top: 20px;
+  width: 300px;
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;;
+}
+
